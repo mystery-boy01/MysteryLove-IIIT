@@ -1,0 +1,393 @@
+/* 🌙 Romantic Background (FINAL FIX) */
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    color: #eaeaea;
+    overflow-y: auto;
+
+    /* 🌌 Gradient Night */
+    background: radial-gradient(circle at top, #1a1a2e, #0b0b12 70%);
+}
+
+/* ✨ Stars Layer */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url("https://www.transparenttextures.com/patterns/stardust.png");
+    opacity: 0.25;
+    z-index: -1;
+}
+
+/* 💜 Soft Romantic Glow */
+body::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 105, 180, 0.08), transparent 70%);
+    z-index: -1;
+}
+
+/* 💖 Layout (UNCHANGED) */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+
+/* 🌙 Moon */
+.moon {
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    width: 80px;
+    height: 80px;
+    background: #f5f3ce;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #f5f3ce;
+}
+
+/* 📜 Scroll container */
+.scroll {
+    width: 500px;
+    height: 0;
+    overflow: hidden;
+}
+
+/* 📜 Paper */
+.paper {
+    width: 100%;
+    height: 0;
+    background: linear-gradient(#f5e6c8, #f1d9b5);
+    border: 1px solid #d2b48c;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    overflow: hidden;
+    transition: height 1.5s ease;
+}
+
+/* 📜 OPEN STATE */
+.paper.open {
+    height: auto;
+}
+
+/* 📜 Rolls */
+.paper::before,
+.paper::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 30px;
+    background: #e0c9a6;
+    border-radius: 50%;
+}
+
+.paper::before {
+    top: -15px;
+}
+
+.paper::after {
+    bottom: -15px;
+}
+
+/* 💌 Content */
+.content {
+    opacity: 0;
+    padding: 50px 40px;
+    text-align: center;
+    transition: opacity 1s ease;
+}
+
+.content.show {
+    opacity: 1;
+}
+
+/* ✍ Text */
+.content p {
+    font-size: 20px;
+    color: #3b2f2f;
+    line-height: 1.8;
+    font-weight: bold;
+}
+
+/* ✍ Author */
+.author {
+    margin-top: 20px;
+    text-align: right;
+    font-style: italic;
+}
+
+/* 🔘 Button */
+.next-btn {
+    margin-top: 30px;
+    padding: 12px 30px;
+    border: 1px solid #ff9aa2;
+    background: transparent;
+    color: #ff9aa2;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.next-btn:hover {
+    background: #ff9aa2;
+    color: black;
+}
+
+/* 📜 Intro Box */
+.intro-box {
+    max-width: 750px;
+    text-align: center;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* 💖 HOME PAGE CENTER FIX */
+
+/* 💥 FORCE CENTER FIX */
+.home-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+    width: 100%;
+}
+
+/* Title */
+.home-title {
+    font-size: 36px;
+    color: #ff9aa2;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Buttons style */
+.buttons button {
+    padding: 12px 25px;
+    border: 1px solid #ff9aa2;
+    background: transparent;
+    color: #ff9aa2;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+/* Bottom text */
+.bottom-text {
+    color: #ccc;
+}
+
+/* 🌙 Title Animation */
+.home-title {
+    text-align: center;
+    font-size: 40px;
+    color: #ff8fa3;
+    margin-top: 60px;
+
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: fadeSlideDown 1.5s ease forwards;
+}
+
+/* ✨ Buttons Container */
+.buttons {
+    text-align: center;
+    margin: 30px 0;
+
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+    animation-delay: 1s;
+}
+
+/* 💫 Glowing Buttons */
+.buttons button {
+    margin: 10px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    background: transparent;
+    transition: 0.3s;
+}
+
+/* 🌸 Individual Styles */
+.buttons button:nth-child(1) {
+    border: 1px solid #ff6b81;
+    color: #ff6b81;
+    box-shadow: 0 0 10px rgba(255, 107, 129, 0.5);
+}
+
+.buttons button:nth-child(2) {
+    border: 1px solid #a29bfe;
+    color: #a29bfe;
+    box-shadow: 0 0 10px rgba(162, 155, 254, 0.5);
+}
+
+.buttons button:nth-child(3) {
+    border: 1px solid #00cec9;
+    color: #00cec9;
+    box-shadow: 0 0 10px rgba(0, 206, 201, 0.5);
+}
+
+/* 💥 Hover Glow */
+.buttons button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px currentColor;
+}
+
+/* 💌 Content Animation */
+.content {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+    animation-delay: 2s;
+}
+
+/* 🎬 Animations */
+@keyframes fadeSlideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* 💖 Interaction Section */
+.interaction-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px auto;
+    max-width: 900px;
+    gap: 20px;
+}
+
+/* 📦 Boxes */
+.box {
+    width: 45%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* ✨ Headings */
+.box h3 {
+    color: #ff9aa2;
+    margin-bottom: 10px;
+}
+
+/* ✍ Textarea */
+.box textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    resize: none;
+    outline: none;
+}
+
+/* 🔘 Button */
+.box button {
+    margin-top: 10px;
+    padding: 8px 20px;
+    border: 1px solid #ff9aa2;
+    background: transparent;
+    color: #ff9aa2;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.box button:hover {
+    background: #ff9aa2;
+    color: black;
+}
+
+/* 💌 LEFT BOX */
+.message-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 220px;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+/* 💬 RIGHT BOX */
+.comment-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 220px;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+/* ✍ TEXTAREA */
+.message-box textarea,
+.comment-box textarea {
+    width: 100%;
+    height: 70px;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    resize: none;
+}
+
+/* 🔘 BUTTON */
+.message-box button,
+.comment-box button {
+    margin-top: 5px;
+    padding: 5px 15px;
+    border: 1px solid #ff9aa2;
+    background: transparent;
+    color: #ff9aa2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* 🏷 LABEL */
+.message-box p,
+.comment-box p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #ff9aa2;
+}
+
+#shayari-text {
+    white-space: pre-line; /* keep formatting but no typing */
+}
+
+.author {
+    opacity: 1;
+}

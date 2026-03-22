@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Georgia, serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* 🌙 TITLE */
+        .home-title {
+            text-align: center;
+            font-size: 40px;
+            color: #ff8fa3;
+            margin-top: 60px;
+
+            opacity: 0;
+            transform: translateY(-40px);
+            animation: titleAnim 1.5s ease forwards;
+        }
+
+        /* 🔘 BUTTONS */
+        .buttons {
+            text-align: center;
+            margin: 30px 0;
+
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .buttons button {
+            margin: 10px;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        /* 🌸 UNIQUE GLOW */
+        .btn1 {
+            border: 1px solid #ff6b81;
+            color: #ff6b81;
+            box-shadow: 0 0 10px #ff6b81;
+        }
+
+        .btn2 {
+            border: 1px solid #a29bfe;
+            color: #a29bfe;
+            box-shadow: 0 0 10px #a29bfe;
+        }
+
+        .btn3 {
+            border: 1px solid #00cec9;
+            color: #00cec9;
+            box-shadow: 0 0 10px #00cec9;
+        }
+
+        /* 💥 HOVER */
+        .buttons button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        /* 💌 CONTENT */
+        .content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-size: 18px;
+            line-height: 1.8;
+
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 2s;
+        }
+
+        .content b {
+            color: #ff8fa3;
+        }
+
+        /* 🎬 ANIMATIONS */
+        @keyframes titleAnim {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1 class="home-title">Welcome to the World of Hidden Love 🌙</h1>
+
+<div class="content">
+
+<p>
+A place where feelings are written, not spoken… where every word carries a piece of a silent heart.
+</p>
+
+<p>
+There are three sections in this world:
+</p>
+
+<p>
+<b>1. Stories Box</b><br>
+Behind every shayari and poetry lies a story untold. These stories will be revealed only at the final chapter of my college journey.
+</p>
+
+<p>
+<b>2. Secret Box</b><br>
+A collection of everything I have written… all dedicated to someone who unknowingly became special.
+</p>
+
+<p>
+<b>3. The Confession Box</b><br>
+This is where everything is real. No filters, no hiding—just pure feelings. But this space belongs only to her.
+</p>
+
+<p>
+And there’s a twist… If she ever wants to unlock it, she will have to find me first.
+</p>
+
+</div>
+
+<div class="buttons">
+    <button class="btn1" onclick="openStories()">Stories Box</button>
+    <button class="btn2" onclick="openShayari()">Secret Box</button>
+    <button class="btn3" onclick="openConfession()">Confession Box 🔒</button>
+</div>
+
+<script>
+function openStories(){
+    alert("Abhi nahi… waqt aane par 💌");
+}
+
+function openShayari(){
+    window.location.href = "shayari.html";
+}
+
+function openConfession(){
+    let pass = prompt("Enter Secret Password 🔐");
+
+    if(pass === "name") {
+        window.location.href = "confession.html";
+    } else {
+        alert("Access Denied 💔");
+    }
+}
+</script>
+
+</body>
+</html>

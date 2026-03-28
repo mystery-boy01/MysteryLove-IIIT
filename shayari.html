@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shayari</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #0b0b12;
+            font-family: Georgia, serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+
+        /* 🌙 Moon */
+        .moon {
+            position: fixed;
+            top: 50px;
+            right: 80px;
+            width: 70px;
+            height: 70px;
+            background: #f5f3ce;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #f5f3ce;
+        }
+
+        /* 📜 Wrapper (for buttons positioning) */
+        .container {
+            position: relative;
+        }
+
+        /* 📜 Paper */
+        .paper {
+            width: 600px;
+            background: linear-gradient(#f5e6c8, #f1d9b5);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            color: #3b2f2f;
+            position: relative;
+        }
+
+        /* ✍ Shayari */
+        #shayari-text {
+            font-size: 22px;
+            line-height: 1.8;
+            white-space: pre-line;
+            font-weight: bold;
+        }
+
+        /* ✍ Author (inside paper, right bottom) */
+        .author {
+            margin-top: 30px;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* 🔘 Buttons (outside paper) */
+        .btn {
+            position: absolute;
+            bottom: -60px;
+            padding: 10px 25px;
+            border: 1px solid #ff9aa2;
+            background: transparent;
+            color: #ff9aa2;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .btn:hover {
+            background: #ff9aa2;
+            color: black;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<div class="container">
+
+    <div class="paper">
+        <p id="shayari-text"></p>
+        <div class="author" id="author-text"></div>
+    </div>
+
+    <!-- 🔘 Buttons outside -->
+    <button class="btn prev" onclick="prevShayari()">⬅️ Previous</button>
+    <button class="btn next" onclick="nextShayari()">Next ➡️</button>
+
+</div>
+
+<script>
+
+let shayariList = [
+
+{
+    text: `❤️❤️Pehli Mulaqaat❤️❤️
+    28/01/2026 6:10 PM
+Aaj usse meri mulakat hui
+Wo sath thi mere, meri usse baat hui
+Uski mithi baate mere dil bhaa rahi thi,
+Uski baate mujhe pasand aa rahi thi,
+Chai ki wo pyali bhi Dheere-Dheere Dhime-Dhime kam hoti ja rahi thi,
+Usko rokne ke ka ab koi bahana nhi thi,
+Usko jane dene ka koi irada nhi thi,
+Beth krr usse ghanto baat krni thi,
+Dil nhi hai jane dene ka yahi baat kehni thi,
+Kehta me rukogi kya thoda toh kya rukti,
+Mere dil ki baat ko samjhti,
+kehre chodo ab ye toh alag baat hai,
+Jo ja rahi thi wo ek pyari si ladki wo mere liye bhut khas hai...💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Ke chaand ki roshni Tere hone se aati hai 
+Tarao ko chamak Tere hone se jagmagati hai
+Tu nikala kar bahar Thoda hi sahi
+Ek Parinde ko Neend Tere Dikhne se aati hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `💜 Likh Du💜
+Teri Aankhon pe likh du
+Tere Kajal pe likh du
+Teri Saasein Teri Baatein Teri Aawaj pe likh du
+Tu Muskura toh sahi, Tu Gunguna toh sahi
+Tujhe Zameen bhi likh du, Tujhe Aasman bhi likh du...❤️
+
+Tere Jhumko pe likh du
+Teri Bindi pe likh du
+Tere Sajne Tere Sawarne Tere Nikhar pe likh du
+Tu Nikal toh sahi, Tu Dhaal toh sahi
+Tujhe Subha bhi likh du, Tujhe Shaam bhi likh du...❤️
+
+Teri Chudiyo pe likh du
+Teri Khan-Khan pe likh du
+Tere Haath Teri Lakhire Tere Naseeb pe likh du
+Tu Jaan toh sahi, Tu Samajh toh sahi
+Tujhe Apna bhi likh du, Tujhe Khuda bhi likh du...❤️
+
+Teri Payal pe likh du
+Teri Chaan-Chaan pe likh du
+Teri Dhadkan Teri Uljhan Teri Zulfon pe likh de
+Tu Zikar toh kar, Tu Umeed toh de
+Tujhe Aagaaz bhi likh du, Tujhe Anjaam bhi likh du...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Tumse kitni bhi baat krlu,
+Dil krta hai thodi Aur krlu,
+Yeh baatein kabhi khatm na hoo teri meri,
+Baaton mein teri Din se Raat- Raat se Din kardu..❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `❤️❤️ Mohobbat ki Mohobbat se Baat❤️❤️
+Chalo aaj ek baat ho jaye
+Mohobbat ki Mohobbat se baat ho jaye
+Kuch Anjani batao ka aaj zikar ho jaye
+Mohobbat ki Mohobbat se baat ho jaye 
+Kuch bate hai jinse tum Anjaan ho
+Kuch bate hai jinse hum Anjaan hai
+Chalo aaj moka hai kyu na aaj ho jaye
+Mohobbat ki Mohobbat se baat ho jaye
+Mana ke mein aaj tumse dur tha
+Mila nhi tujse tere khayalon me masruf raha
+Chalo aaj ka din tumhara kesa raha yahi baat ho jaye 
+Mohobbat ki Mohobbat se baat ho jaye
+Sath chalogi kya tum kuch duri tak
+Lo ab Chalte-Chalte coso dur chale aaye
+Yeh duri phrr Taye krni hai toh chalo kuch baat ho jaye
+Mohobbat ki Mohobbat se baat ho jaye
+Tere Honthon se Nikle har Shabd Dil ko Lubha dete hai
+Teri Aankhon mein aankhein daal baat krna mujhe Sukoon dete hai
+Chalo Sankhon ke Ishaaron me aaj baat ho jaye
+Mohobbat ki Mohobbat se Baat ho Jaye...❤️❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Khuda se Duaon me ek Tohfaa manga hai 
+Mukammal ho har Khwahish uski asa Vardaan manga hai
+Jaha ho Khushiyan Bharpur, Ho khula Aasmaan
+Asa uske liye ek Aashiyana Manga hai...🥰❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Galti tum karogi, hum hamari likh denge
+Ruthi tum rahogi, Hum maafi likh denge
+Shikayaten rahe humse toh duriya likh denge
+Aur Yeh Jo tera khush rehna hi mujhe har pal manzur hai
+Agar reh jaye phir bhi koi khataa humse toh bata dena
+hum apne aapko bhi kalam se saja likh denge...❤️`,
+    author: "By - Me,The Mystery" 
+},
+
+{
+    text: `"❤️--TERE SANG--❤️"
+Tere Sang Bitaya har pal Acha lgta hai 
+Tere Sang Beth kar muskurana Acha lgta hai
+Tere Sang Chup rehta hoon yeh ISHQ hai mera
+Tere Sang teri Baatein Sunna Acha lgta hai...❤️
+Tere Sang Dil ko ek Sukoon milta hai
+Tera Sang har Sapna Haqiqat lgta hai
+Tere Sang Lakiron ka Na hona Fark nhi padta
+Tere Sang Tu mujhe har pal Apna lgta hai
+Tere Sang teri Aankhon me khona Acha lgta hai...❤️
+Tere Sang teri Zulfon me Ulajhana Acha lgta hai
+Tere Sang hone par mein koi Tamannah nhi krta
+Tere Sang tere Dil me QAID hona Acha lgta hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Mera ek Nayaab Khazana ho Tum
+Dil mein chupa loon Jo Izazat do Tum
+Iss Khazane ki Hifazat Mein Janmo-Janam krta rahunga
+Pehredari Karne ki agar Izazat do Tum...❤️🥰`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Tham jayegi ye dhadkan bhi yaha
+Jhuk jayengi ye Nazrein bhi yaha
+Tum Saayaa banna Tum Haqiqat ho meri
+Tum khabar rakhna Hum Bekhabar hai yaha...💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Mana ke Taron Se wo Jagmagaya hua hai
+Khidmat mein uski sara Jahaan aaya hua hai
+Kitna Khush Naseeb Aasmaa hai yeh
+Jise Mere Chaand Ne Sajaya hua hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `🥰{{❤️--KUCH TOH BAAT--❤️}}🥰
+Kuch toh baat hai usme
+Kuch toh alag baat hai usme 
+Kuch Tarif uski Khubsurati ki bhi krdu
+Kuch toh khaas baat hai usme
+Kuch toh alag baat hai usme 
+
+Kuch uski Nigaahon me hai
+Kuch uski Baaton me hai
+Kuch uski Zulfon me hai
+Kuch uski ADAAON me hai
+Kuch uske Hone me hai
+Kuch uske Jane me hai
+Kuch uske Aane me hai
+kuch uske har Bahane me hai
+Kuch toh khaas baat hai usme
+Kuch toh alag baat hai usme
+
+Kuch toh baat hai usme jo Hawaon ko mehka deti hai
+Kuch toh baat hai usme jo Sabko hasa deti hai
+Kuch toh baat hai usme jo itni Khubsurat lgti hai
+Kuch uski HARKATEIN badi Natkhat lgti hai
+Kuch uski SHARARATE mere Dil me basti hai
+Kuch hai jo usse Sabse Alag banata hai
+Kuch hai jo usse Sabse Khaas banata hai
+Kuch hai Masumiyat jo uske Dil me hai
+Kuch hai Pagalpan jo uski Zindagi me hai
+Kuch hai jo Shayad mere Dil me bhi hai
+Kuch toh hai jo shyd uske milne me bhi hai
+Kuch kya hai yeh wo khud jaan jayegi
+Chehre ko apne jab wo meri Aakhon me dekh payegi
+CHAAND bhi usse jalta hai wo khud samjh jayegi
+kuch toh khaas baat hai usme
+kuch toh alag baat hai usme
+kuch toh ab wo Khud Samajh Jayegi...❤️
+`,
+    author: "By - Me,The Mystery"
+},
+
+
+{
+    text: `Khil-Khilati raha karo
+Tum pyari lgti hoo,
+Ye sari Duniyaa sukhi sii
+Tum Haryali lagti ho,
+Aur lagta hai jese
+Mahina Savan ka aa gya, 
+Tadapti hui garmi me jab
+Tum Bochaar karti hoo...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Tu Arj kar mein Gor Farmaunga
+Teri har baat ko sunna mein SHIDDAT se Chahunga
+Tu meri kisi baat se RUTH mat jana 
+Mein Tere aage har baar JHUK JAUNGA...🥰❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `❤️"Hum Jante Hai"❤️
+Hawaaon ko Pegam Karna hum jante hai
+Phoolon ki Mehek Pehchana hum jante hai
+Hum jante hai har Khwahish unki
+Unki Aankhon ko Padna hum jante hai...💜
+
+Suraj ka Jalna hum jante hai
+Chaand ka Chamakna hum jante hai
+Hum jante hai unke Chehre ke Nikhaar ko
+Unki Khubsurati ko Dekhna hum jante hai...🥰
+
+Baadalon ka Garajna hum jante hai
+Barish ka Barasna hum jante hai
+Hum jante hai unke Muskurane ki Wajah
+Unki Zulfon ko Samajhna hum jante hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Agar Baat hui toh MOHABBAT bhi Hogi
+Chand ki Tare se MULAQAT bhi Hogi
+Wo TUT Chuka Tara jo Laut krr Naa Aayega
+Maang ke dekh har KHWAAISH  Tumhari Puri karke Jayega...🥰💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Lakho PANNE Palat diye Kismat ke
+Tera Naam nhi mila...
+Tu NASEEB me nhi
+Ya Tune wo KAGAJ JALA diya...
+Aaj bhi AAS me Teri
+KITABE Khoja krta Hoon...
+RAAKH huye KAGAJON me bhi
+Tera Naam KHOJAA Krta HOON...🥰💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `HAQIQAT Me Tu TAKDEER Me Nhi
+KHAWABO Me Har Pal Rehti Hai
+Yeh Jo Jee Raha Hoon Mein Tere BAGER Bhi
+Shayad Yeh AAKHEIN Meri Har wakt Soi Rehti Hai...`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `🥰❤️USKI ZULFE--❤️🥰
+Uski Zulfon ki Leheron ko hum Pehechante hai
+Kuch keh rahi hai kya wo chalo ye jante hai
+Uska darna Laazamee hai
+Zulfon ko Baandhna Laazamee hai
+Kahi koi aur na padh le Zulfon ko uski
+Uska Fikar karna bhi Laazamee hai
+Chod do yeh sari Fikron-Firatein
+Ulajhna-Sulajhna hum jante hai
+Kholke ke rakha karo inn Zulfon ko tum
+Yaha Teri Zulfon se Baatein krna Sirf hum Jante hai,
+Yun Teri Zulfon ka khulna
+Unka udhna
+Udkar Aankhon ke aage aana
+Phir Tera iss tarah unhe Sawarna 
+Ziddi Tum Bhi ho Ziddi Woo bhi
+Unka Har Baar Udna Tera Baar Baar Sawarna,
+Kayenaat ko bhi tera Nikhar kam hona Manzur nahi,
+Hawaaon ko bhi teri Zulfon ka Piche rehna manzur nahi
+Chood do apni yeh Zid
+Kyu Zid par Addi ho
+Rehne do Nigaahon ke aage yun hi
+Kyu inke piche padi hoo,
+Tum Jaanti Nahi Ahmiyat Inki,
+Meri Aankhon se Dekho Tumhe sab Nazar aayega,
+Jab Dekhogi Kholke Inhe apne-aap ko Shishe me,
+Iss Dafaa Tumhe ek Chaand Nazar aayega...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Gunehgar mere Dil ki meri Zubaan hai,
+Gawah mere Dil ki meri Aankhein,
+Zakham mere dil ke meri Dhadkan hai,
+Marham mere Dil ki Uski Baate...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Ek raat ek baat Likhunga
+Wahem se pare ek Sansaar Likhunga
+Tujhe mil jaye teri Khushiyan Jo bhi teri Maang ho
+Meri kismat mein tujhe baar baar Likhunga...❤️❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `🥰USKI SHARARTE🥰
+SHARARAT Uski mujhe badi PYARI lgti hai
+Uski SHARARTON me NADANI Dikhti hai
+Bas baat cheed gyi ek dafaa ____ ki
+Hayee kya HARKATEIN Krti hai
+BACHII kahu ya BACHPANA ye Tum Jaanlo
+Mujhe toh wo CUTE or PYARI lgti hai
+Mene dekha hai usse HARKATEIN krte
+Hath Per uthake khushi se MACHALTE 
+Uski khushi ka koi THIKANA nhi tha
+Wo uska BACHPANA tha koi DIKHAWA nhi tha
+____ me ek cheez ko DHUNDHNE, bacho ki tarah BHAGNA 
+GHUMTE FIRTE Maje Krna
+Bahar aake ____ par BHAGTE FIRNA 
+Haa yahi BACHPANA toh uska mujhe, RAAS aata hai hai
+Uski Inhi ADAAON par mera Dil Pighal Jata hai
+Or ye ab JITNE bhi hai FAASLE uski aur se hai
+Mere DIL ko Toh HAR PAL bas uska KHAYAL Aata HAI...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Yeh Chand jo iss tarah har roj Jagmagata hai
+Shayar ki Shayarion me iska Zikar aata hai
+Isse Khubsurat toh meri Mohabbat hai
+Aur ye mujhe Ghamand dikhata hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Tare ki Aaj-Kal CHAAND se Baat nhi Hoti
+MULAQAT toh hoti Hai, par wo Baat nhi Hoti
+Raat ka Intejar rehta hai Uski Ek Jhalak Dekhne ko
+Inn chaye huye baadalon uski Roshni nhi hoti...💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `❤️M_U_S_K_U_R_A_H_A_T❤️
+Muskurahat uski jo itni Pyari hai
+Muskurade tu toh Keher Barsati hai,
+Muskurahat dekh loon teri toh Dil Khush ho jata hai
+Muskurade tu ek baar toh mera Din ban jata hai,
+Muskurahat teri mere dil ka Sukoon hai
+Muskurade tu jo agar har Dukh Dard mujhse koso dur hai,
+Muskurahat me teri ek Mohobbat hai meri
+Muskurade tu toh mohobbat Mukammal ho jaye meri,
+Muskurahat mein teri Khushiyan Hazaro hai
+Muskurade tu toh khushiyan Barasti mujh par har baar hai,
+Muskurahat teri jisko koi Rakam Kharid nhi skti
+Muskurade tu ek dafaa toh me Bik jata hoon,
+Muskurahat mein tere ek khaas pyar hai
+Muskurade tu mein har pal tera banna Chahta hoon,
+Muskurahat ko teri mein kabhi khone nhi dunga
+Muskurade tu pakadne de ye hath tera, tujhe kabhi rone nhi dunga...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `ZUBAAN pe mere Naam Tumhara hai
+Subah se Raat tak KHAWAB Tumhara hai
+MUKANDRA me Tumhara SATH, NASEEB ki baat hai
+AAJ se iss DIL pe Sirf Naam Tumhara hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `🥰Aakhri Baat🥰
+Tum mujhe pasand ho yeh AAKHRI Baat hai
+Mein Tumhara ho gya Hoon yeh AAKHRI Baat hai 
+Tum mujhe Chaho ya na Chaho yeh Tumhari MARJI
+Mein Apni ZINDAGI tujhe par KURBAAN  kar betha ye AAKHRI BAAT HAI...❤️
+
+Tum KHWAAISH ho meri yeh AAKHRI Baat hai
+Tum JANNAT ho meri yeh AAKHRI Baat hai 
+Tum mujhe MANNATOON me mango ya nahi yeh Tumhari marji
+Tum meri ROOH se Jud chuki ho Yeh AAKHRI BAAT HAI...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Hum agar teri tasveer banane lag jaye
+Tasveer me jab teri Surat banane lag jaye
+7 janam bhi kaam honge banane ke liye
+Jab Teri Aankhon ki khubsurti Banane lg jaye...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Yun toh wo Muskurati hui wo Kamal lgti hai,
+Chand se aayi koi Shehzadi lgti hai,
+Jab khol leti hai wo apni Zulfe,
+Kasam se Nazrein Katilana wo Lajawab lgti hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `❤️❤️Muskurane ki Wajah❤️❤️
+Muskurane ki meri tu wajah ban gyi
+Meri Zindagi ki ek kahani ban gyi
+Na tu kareeb na Aas- Pass mere
+Zindagi Jeene ki nayi Wajah ban gyi
+Tu Beshak dur raha krti hai mujhse
+Me pagal hu tujhme, mujhe bhi ishq hai tujhse
+Teri Aankhein, Teri Bali, Tere Honthon ki Lali
+Tere Zumkhe, Tera Kajal, Tere Mathe par saji Bindi or Aachal
+Subha Subha wo tera khayalo me aana
+Uthne me har roj der ho jana
+Milne ki umeed me phrr college aana
+Beth ke piche tujhe Niharte jana
+Teri baato ko sunke Nasha chad jana
+Teri Muskurahat ko dekh ke Sukoon mil jana
+Suraj Dhalte-Dhalte tera Ghum ho jana
+Dil ka phrr se udas ho jana 
+Subh khayalo me aana ke khayal se hostel aa jana
+Yahi same process har zoj dohrana
+Mohobbat bepanah krte hai tujhse
+Tu ek baar toh mujhe Aajmana,
+Mujhe Apni Zindagi Bana lee
+Meri Muskurane ki wajah ban jana...💔`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Bate krti hui tu Behad Pyari lgti hai
+Rukhe sukhe honthon mein ye baate phiki leti hai
+Le ek tohfa tere liye mein aaj saja ke laya hoon
+Laga le isko Honthon pe Tere Alfaaz sunne aaya hoon...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Iss Tanaav bhari Zindagi mein
+Wo mera sukoon hai,
+Meri kabhi baat nahi hoti usse
+Par mera Dil usi me Masruf hai,
+Aur yun toh mein roj use dekh kar hi
+khush ho liya krta hoon,
+Agar wo Zindagi me aa jaye
+Toh Baat kuch Aur hai...❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Khamoshi se Teri Mein SAHAM gaya Hoon
+Tujhse Baat krne ko Mein TARAS gaya Hoon
+Yakin kar mera MOHOBBAT ki Sachai Mere har AASU me Hai
+Tu JAANTI Hai Sab Kuch Phir Bhi SABAR Krr raha HOON...🥺`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Mein tumhe ek gulab 🌹 dena chahta hoon,
+Masla ye hai ki behad had-se-jada💝
+Khubsurat dena chahta hoon,
+Tum bura na maano toh
+Tumhari Khubsurati thodi Udhar le loon🤏,
+Mein iss Gulab ko
+Yeh Khubsurati dena chahta hoon...🥰`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `Ke aaj keh bhi do mohabbat krti ho
+Hum toh krte hai kya tum bhi krti ho
+Ye tera Chand sa chehra mere dil ko bhata hai
+Sach kahu toh din raat yahi yaad aata hai
+Ye jo chand se chehre par 2 daag hai
+Ha wahi tere dimple iss chehre ki nikhar hai
+Dimple jo tere gaalo par hai, jo gulab se laal hai
+Or teri hothon ki muskurahat, jisme lgti tu lajawab hai
+Issi muskurahat se tum jawab dena
+Mohobbat mein toh krta hu, kya tum bhi krti ho
+bas itna bata dena...☺️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `🌹🌹GULAB🌹🌹
+Mein apni Mohabbat ko MUKAMMAL krna chahta hoon,
+Aaj ke din mein tujhe ek GULAB dena chahta hoon,
+Apni Mohabbat ka mein tujhse aaj izhar nhi karunga,
+Yeh Gulab dosti ke LIHAAJ se dena chahta hoon,
+Tu mana mat krna bas rakh lena,
+Mere Dil ke Jazbaaton ko thoda samjh lena,
+Thodi FHURSAT ho beth kar baat krne ki mujhse,
+Iss Shaks ka bhi haal puch lena,
+Or puch lena agar hai koi mansha tere maan mein,
+Yeh Phool kya kabhi kisi or ko bhi diya hai mene,
+Mere ZUBAAN se tum kbhi kisi or ka zikar nhi paaogi,
+Tum pehli Person hi hogi jo mere haathon se ye GULAB paaogi,
+Agar nhi MILI tum mujhe zindagi me kbhi,
+Toh dil par koi MALAL nhi hoga,
+Tere PASS Naa hone kaa AHSAAS toh hoga,
+Tu Khush hogi Apni ZINDAGI mein mere bina bhi,
+Bas yahi jankar koi GUM nhi hoga,
+Tu isse RAKHNA ya FEK dena ye teri marji,
+Mein GULAB jo tere liye apni marji laya hoon,
+Haan mein ye apni MOHABBAT ke liye laya hoon,
+Magar aaj yeh Dosti ke LIHAAJ se laya HOON...🌹❤️`,
+    author: "By - Me,The Mystery"
+},
+
+{
+    text: `One Day Someone Ask, What is Love....❤️ I said-
+*Love is Care, Care for You*
+*Love is Respect, Respect for You*
+*Love is Feelings, Feelings for You*
+*Love is Emotions, Emotions for You*
+*Love is Connection, Connection with You*
+*Love is Understanding, Understanding with You*
+*Love is Humble, Humble for You* 
+*Love is Loyal, Loyalty for You*
+*Love is Eternal and You are My Eternal Love*
+*Because Love is Special, Special is You*❤️❤️
+
+My Love is Only For You...❤️`,
+    author: "By - Me,The Mystery"
+}
+
+];
+
+let index = 0;
+
+function showShayari(){
+    document.getElementById("shayari-text").innerText = shayariList[index].text;
+    document.getElementById("author-text").innerText = shayariList[index].author;
+}
+
+function nextShayari(){
+    index++;
+    if(index >= shayariList.length){
+        index = 0;
+    }
+    showShayari();
+}
+
+function prevShayari(){
+    index--;
+    if(index < 0){
+        index = shayariList.length - 1;
+    }
+    showShayari();
+}
+
+/* 👇 first load */
+showShayari();
+
+</script>
+
+</body>
+</html>
